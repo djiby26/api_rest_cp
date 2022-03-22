@@ -1,10 +1,16 @@
 import "./config/db.js";
 import express from "express";
-import { createUser, getUsers, updateUser } from "./controllers/Users.js";
+import {
+  createUser,
+  deleteUser,
+  getUsers,
+  updateUser,
+} from "./controllers/Users.js";
 const app = express();
 import bodyParser from "body-parser";
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 //RETURN ALL USERS
 app.get("/", getUsers);
@@ -16,7 +22,7 @@ app.post("/", createUser);
 app.put("/:id", updateUser);
 
 //DELETE : REMOVE A USER BY ID
-app.delete("/:id");
+app.delete("/:id", deleteUser);
 
 app.listen(3001, () => {
   console.log("server ok");

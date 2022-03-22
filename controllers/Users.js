@@ -32,30 +32,19 @@ export const createUser = async (req, res) => {
 
 export const updateUser = (req, res) => {
   const body = req.body;
-  UserModel.findByIdAndUpdate(body.params.id, body);
-  //   .exec((err, result) => {
-  //     if (err) {
-  //       console.log(err);
-  //     }
-  //   });
-
-  UserModel.findById(body.params.id, (err, result) => {
-    // if (err) {
-    //   console.log(err);
-    // } else {
-    //   if (body.name) {
-    //     result.name = body.name;
-    //   }
-    //   if (body.password) {
-    //     result.password = body.password;
-    //   }
-    //   result.save();
-    //   res.send(result);
-    // }
-  });
+  UserModel.findByIdAndUpdate(req.params.id, body, { new: true }).exec(
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        result.save();
+        res.send(result);
+      }
+    }
+  );
 };
 
-export const deletUser = (req, res) => {
+export const deleteUser = (req, res) => {
   UserModel.findByIdAndDelete(req.params.id, (err, doc) => {
     if (err) {
       console.log(err);
